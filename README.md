@@ -99,7 +99,7 @@ https://你的域名/release/2f9b427d-cc6e-4465-9f70-9d2109381db0/front-500
 
 本项目常用于解决 MoviePilot 音乐探索封面不显示的问题。
 
-1. 部署完成后，将代理域名（如 `https://archive.jgyun.top`）加入 MoviePilot 的图片域名白名单（`SECURITY_IMAGE_DOMAINS`）
+1. 部署完成后，将代理域名（如 `https://archive.xxx.top`）加入 MoviePilot 的图片域名白名单（`SECURITY_IMAGE_DOMAINS`）
 
 2. 将音乐探索的封面 URL 前缀从 `https://coverartarchive.org` 改为 `https://你的域名`
 
