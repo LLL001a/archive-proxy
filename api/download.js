@@ -1,6 +1,9 @@
-// Vercel Serverless Function - archive.org 图片反向代理
+// Vercel Serverless Function - archive.org / coverartarchive.org 图片反向代理
 // 在函数内部跟随重定向，直接获取图片内容并返回
-// 部署后访问 https://你的域名/download/xxx 会代理到 https://archive.org/download/xxx
+// 支持两种路径：
+//   /download/xxx        -> https://archive.org/download/xxx
+//   /release/xxx/front-500  -> https://coverartarchive.org/release/xxx/front-500
+//   /release-group/xxx/front-500 -> https://coverartarchive.org/release-group/xxx/front-500
 
 export default async function handler(req, res) {
   // 只处理 GET 请求
@@ -9,7 +12,7 @@ export default async function handler(req, res) {
     return;
   }
 
-  // 从 query 参数中提取路径（vercel.json rewrites 将 /download/:path* 映射到 ?path=:path*）
+  // 从 query 参数中提取路径（vercel.json rewrites 将 /:path* 映射到 ?path=:path*）
   const url = new URL(req.url, `https://${req.headers.host}`);
   const targetPath = url.searchParams.get('path');
 
@@ -18,7 +21,18 @@ export default async function handler(req, res) {
     return;
   }
 
-  const targetUrl = `https://archive.org/download/${targetPath}`;
+  // 根据路径前缀决定目标 URL
+  let targetUrl;
+  if (targetPath.startsWith('download/')) {
+    targetUrl = `https://archive.org/download/${targetPath.slice('download/'.length)}`;
+  } else if (targetPath.startsWith('release/')) {
+    targetUrl = `https://coverartarchive.org/release/${targetPath.slice('release/'.length)}`;
+  } else if (targetPath.startsWith('release-group/')) {
+    targetUrl = `https://coverartarchive.org/release-group/${targetPath.slice('release-group/'.length)}`;
+  } else {
+    res.status(400).json({ error: 'Unsupported path' });
+    return;
+  }
 
   try {
     // 跟随重定向获取图片内容
