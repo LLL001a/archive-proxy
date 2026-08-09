@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/download/:path*",
-      "destination": "https://archive.org/download/:path*"
-    }
-  ]
-}
