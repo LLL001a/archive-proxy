@@ -49,7 +49,7 @@ archive-proxy/
 
 3. **绑定自定义域名**（可选但推荐）
    - 进入项目 → **Settings** → **Domains**
-   - 添加你的自定义域名（如 `archive.jgyun.top`）
+   - 添加你的自定义域名（如 `archive.xxx.com`）
    - 在 DNS 服务商处添加 CNAME 记录：
      - 主机记录：`archive`（或你想要的子域名）
      - 记录类型：`CNAME`
