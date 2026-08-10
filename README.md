@@ -20,7 +20,7 @@
 本项目通过 Vercel Serverless Function 作为中间代理：
 
 ```
-客户端 → Vercel 代理 (archive.jgyun.top) → archive.org / coverartarchive.org
+客户端 → Vercel 代理 → archive.org / coverartarchive.org
 ```
 
 代理函数在内部**跟随重定向**，直接获取图片内容并返回给客户端。客户端只需访问 Vercel 域名，无需访问 archive.org。
